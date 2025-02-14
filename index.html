@@ -113,10 +113,13 @@
   <body>
     <!-- 音乐播放器 -->
     <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000">
-      <audio id="bgMusic" controls>
+      <video controls autoplay name="media">
+        <source src="mp3/一生所爱.mp3" type="audio/mpeg" />
+      </video>
+      <!-- <audio id="bgMusic" controls>
         <source src="mp3/一生所爱.mp3" type="audio/mpeg" />
         您的浏览器不支持 audio 元素。
-      </audio>
+      </audio> -->
     </div>
 
     <div class="container">
@@ -135,9 +138,7 @@
         <h1>情人节快乐！</h1>
         <p>唐媛媛</p>
       </div>
-      <div class="blessing" id="blessing">
-        《一生所爱》。
-      </div>
+      <div class="blessing" id="blessing">《一生所爱》</div>
       <button class="button" onclick="showBlessing()">展开更多祝福</button>
     </div>
 
