@@ -9,10 +9,10 @@
       body {
         margin: 0;
         padding: 0;
-        background-color: #00eeff; /* 深粉色背景 */
+        background-color: #00fff2;
         font-family: Arial, sans-serif;
         overflow: hidden;
-        color: #ffffff; /* 文字颜色改为白色 */
+        color: #ffffff;
       }
 
       .container {
@@ -29,7 +29,7 @@
         color: #ff0066;
         animation: heartbeat 1s infinite;
         position: absolute;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* 添加阴影增强可见度 */
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
       }
 
       .photo {
@@ -48,7 +48,7 @@
         margin: 20px;
         position: relative;
         z-index: 1;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* 添加阴影 */
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
       }
 
       .blessing {
@@ -58,14 +58,15 @@
         margin: 20px;
         position: relative;
         z-index: 1;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* 添加阴影 */
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        min-height: 70px;
       }
 
       .button {
         padding: 10px 20px;
         font-size: 18px;
-        background-color: #ffffff; /* 按钮背景改为白色 */
-        color: #ff0066; /* 按钮文字改为深粉色 */
+        background-color: #ffffff;
+        color: #ff0066;
         border: none;
         border-radius: 5px;
         cursor: pointer;
@@ -108,18 +109,31 @@
         height: 100%;
         pointer-events: none;
       }
+
+      /* 添加淡入淡出动画 */
+      .fade-in-out {
+        animation: fadeInOut 3s infinite;
+      }
+
+      @keyframes fadeInOut {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
     </style>
   </head>
   <body>
-    <!-- 音乐播放器 -->
     <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000">
-      <video controls autoplay name="media">
-        <source src="mp3/一生所爱.mp3" type="audio/mpeg" />
-      </video>
-      <!-- <audio id="bgMusic" controls>
+      <audio id="bgMusic" controls>
         <source src="mp3/一生所爱.mp3" type="audio/mpeg" />
         您的浏览器不支持 audio 元素。
-      </audio> -->
+      </audio>
     </div>
 
     <div class="container">
@@ -128,7 +142,7 @@
       <!-- 将以下 img 标签的 src 替换为你的照片 URL -->
       <img
         src="images/tyy.jpg"
-        alt="糖糖"
+        alt="情侣照片"
         class="photo"
         style="position: relative; z-index: 1"
       />
@@ -136,10 +150,11 @@
       <div class="heart">❤️</div>
       <div class="message">
         <h1>情人节快乐！</h1>
-        <p>唐媛媛</p>
+        <p>糖糖</p>
       </div>
-      <div class="blessing" id="blessing">《一生所爱》</div>
-      <button class="button" onclick="showBlessing()">展开更多祝福</button>
+      <div class="blessing fade-in-out" id="blessing">
+        你是我唯一的爱，只有你是我心中的唯一。
+      </div>
     </div>
 
     <script>
@@ -175,6 +190,7 @@
       createParticles();
 
       const blessings = [
+        "《一生所爱》 卢冠廷",
         "从前现在过去了再不来",
         "红红落叶长埋尘土内",
         "开始终结总是没变改",
@@ -205,55 +221,43 @@
         "或我应该相信是缘分",
       ];
 
+      // 音乐播放器
+      const audio = document.getElementById("bgMusic");
+      let isPlaying = false;
+
+      // 自动播放音乐
+      audio.addEventListener("play", function () {
+        isPlaying = true;
+        audio.controls = true;
+      });
+
+      audio.addEventListener("pause", function () {
+        isPlaying = false;
+      });
+
+      // 自动切换祝福语
       function showBlessing() {
         const blessing = document.getElementById("blessing");
         const randomIndex = Math.floor(Math.random() * blessings.length);
         blessing.textContent = blessings[randomIndex];
       }
 
-      showBlessing();
-
-      // 音乐播放
-      const audio = document.getElementById("bgMusic");
-      audio.volume = 0.5; // 设置音量为50%
-
-      // 自动播放音乐（部分浏览器可能需要用户交互后才能播放）
-      document.addEventListener("DOMContentLoaded", function () {
-        audio.play();
-      });
-
-      // 添加音乐播放按钮事件
-      audio.addEventListener("play", function () {
-        audio.controls = true;
-      });
-    </script>
-
-    <script>
-      // 自动播放背景音乐的解决方案
-      async function autoPlayMusic() {
-        try {
-          await audio.play();
-          console.log("音乐自动播放成功！");
-        } catch (err) {
-          console.log("自动播放失败，请检查浏览器设置或音乐文件 URL");
-          // 如果自动播放失败，显示提示信息
-          alert("音乐无法自动播放，请点击按钮继续");
-        }
+      // 根据音乐节奏切换祝福语
+      function syncBlessingWithMusic() {
+        // 假设音乐的节奏间隔为3秒
+        setInterval(() => {
+          if (isPlaying) {
+            showBlessing();
+          }
+        }, 3000);
       }
 
-      // 初始化音频对象
-      const audio = document.getElementById("bgMusic");
+      // 初始化
+      syncBlessingWithMusic();
+      audio.play();
 
-      // 尝试自动播放
-      autoPlayMusic();
-
-      // 如果自动播放失败，可以监听页面的首次点击事件
-      document.addEventListener("click", function playOnUserInteraction() {
-        audio.play();
-        document.removeEventListener("click", playOnUserInteraction);
-      });
-
-      // ... 其他代码保持不变 ...
+      // 页面加载时显示第一个祝福
+      showBlessing();
     </script>
   </body>
 </html>
