@@ -52,7 +52,7 @@
       }
 
       .blessing {
-        font-size: 24px;
+        font-size: 48px;
         color: #ffffff;
         text-align: center;
         margin: 20px;
@@ -139,10 +139,9 @@
     <div class="container">
       <div class="particles" id="particles"></div>
 
-      <!-- 将以下 img 标签的 src 替换为你的照片 URL -->
       <img
         src="images/tyy.jpg"
-        alt="情侣照片"
+        alt="糖糖"
         class="photo"
         style="position: relative; z-index: 1"
       />
@@ -152,9 +151,7 @@
         <h1>情人节快乐！</h1>
         <p>糖糖</p>
       </div>
-      <div class="blessing fade-in-out" id="blessing">
-        你是我唯一的爱，只有你是我心中的唯一。
-      </div>
+      <div class="blessing fade-in-out" id="blessing">《一生所爱》 卢冠廷</div>
     </div>
 
     <script>
@@ -222,9 +219,17 @@
       ];
 
       // 音乐播放器
+      // 点击
+      document.addEventListener("click", () => {
+        document.getElementById("bgMusic").play();
+      });
+
+      // 监听鼠标移动的事件
+      document.addEventListener("mousemove", () => {
+        document.getElementById("bgMusic").play();
+      });
       const audio = document.getElementById("bgMusic");
       let isPlaying = false;
-
       // 自动播放音乐
       audio.addEventListener("play", function () {
         isPlaying = true;
